@@ -1,0 +1,49 @@
+Changelog for KERNEL INSTALLER V1.3a
+
+<<<<<NO MORE AROMA WIPE BUG>>>>
+
+
+stock kernel AMD6
+Experimental Kernel v11
+
+changelog for experimental v11
+
+General features
+ . Compiled with latest google 4.7 toolchain
+ . Compiled vfp with neon
+ . LZMA compression for kernel. Size 4.8 MB ==> 3.7 MB
+
+CPU
+
+ . Overclocked upto 1.4 Ghz [Experimental and still a WIP]
+ . Performance governor patched to open up both cores[Andreilux]
+ . Activated Interactive governor
+ . Added 1 new governors: ZZmoove.
+  Activated and tweaked conservative governor
+
+
+Database
+
+ . Added 3 new IO schedulers: V(R), SIO, ZEN. Total 7 now
+ . Disabled GENTLE_FAIR_SLEEPERS
+ . Enabled ARCH_POWER
+
+Memory Management
+
+ . Lowered Android logger size
+ . Optimized LMK
+ . SWAP support
+
+
+Network
+
+ . Enabled 6 new TCP Congestion controls viz. Westwood, Vegas, BIC, HSTCP, HTCP
+ . Set westood as default from cubic.
+
+Miscellaneous features
+ . NTFS Filesystem support for USB OTG
+ . Cleancache enabled
+ . Increase READ_AHEAD size to 1024kb
+ . Fine tuned CFS parameters
+ . Added frandom (Fast kernel number generator) driver
+ . Patch for depleting Entropy pool

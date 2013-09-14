@@ -1,0 +1,172 @@
+show_progress(0.1, 0);
+ui_print("");
+ui_print("");
+ui_print("  ************************************************");
+ui_print("  *                                              *");
+ui_print("  *          CUSTOM KERNELS	       *");
+ui_print("  *                                      *");
+ui_print("  * -=       	   By k2wl              =- *");
+ui_print("  *                                      *");
+ui_print("  ************************************************");
+ui_print("");
+ui_print("");
+
+###
+# PRE STUFF
+###
+assert(
+	getprop("ro.product.device") == "baffin" || 
+	getprop("ro.build.product") == "baffin"
+);
+
+###
+# MOUNTING PARTITIONS
+###
+set_progress(0.01);
+ui_print(" ");
+ui_print("@Mount Partition");
+	# mount /cache
+	set_progress(0.06);
+	ui_print("  Mount /cache");
+	mount("ext4", "EMMC", "/dev/block/mmcblk0p18", "/cache");
+	
+	# mount /system
+	set_progress(0.08);
+	ui_print("  Mount /system");
+	mount("ext4", "EMMC", "/dev/block/mmcblk0p19", "/system");
+
+#####################################################################
+symlink("toolbox", "/system/bin/printenv");
+symlink("toolbox", "/system/bin/touch");
+symlink("toolbox", "/system/bin/wipe");
+symlink("toolbox", "/system/bin/getprop");
+symlink("toolbox", "/system/bin/lsmod");
+symlink("toolbox", "/system/bin/mount");
+symlink("toolbox", "/system/bin/rmmod");
+symlink("toolbox", "/system/bin/chmod");
+symlink("toolbox", "/system/bin/smd");
+symlink("toolbox", "/system/bin/renice");
+symlink("toolbox", "/system/bin/netstat");
+symlink("toolbox", "/system/bin/ps");
+symlink("toolbox", "/system/bin/uptime");
+symlink("toolbox", "/system/bin/log");
+symlink("toolbox", "/system/bin/mkdir");
+symlink("toolbox", "/system/bin/setconsole");
+symlink("toolbox", "/system/bin/schedtop");
+symlink("toolbox", "/system/bin/vmstat");
+symlink("toolbox", "/system/bin/start");
+symlink("toolbox", "/system/bin/rm");
+symlink("toolbox", "/system/bin/nandread");
+symlink("toolbox", "/system/bin/sendevent");
+symlink("toolbox", "/system/bin/playback");
+symlink("toolbox", "/system/bin/watchprops");
+symlink("toolbox", "/system/bin/chown");
+symlink("toolbox", "/system/bin/setprop");
+symlink("toolbox", "/system/bin/rmdir");
+symlink("toolbox", "/system/bin/umount");
+symlink("toolbox", "/system/bin/newfs_msdos");
+symlink("toolbox", "/system/bin/lsof");
+symlink("toolbox", "/system/bin/dmesg");
+symlink("toolbox", "/system/bin/sync");
+symlink("toolbox", "/system/bin/getevent");
+symlink("toolbox", "/system/bin/stop");
+symlink("toolbox", "/system/bin/df");
+symlink("toolbox", "/system/bin/reboot");
+symlink("toolbox", "/system/bin/iftop");
+symlink("toolbox", "/system/bin/ln");
+symlink("toolbox", "/system/bin/mv");
+symlink("toolbox", "/system/bin/ls");
+symlink("toolbox", "/system/bin/ionice");
+symlink("toolbox", "/system/bin/ifconfig");
+symlink("toolbox", "/system/bin/touchinput");
+symlink("toolbox", "/system/bin/md5");
+symlink("toolbox", "/system/bin/cmp");
+symlink("toolbox", "/system/bin/cat");
+symlink("toolbox", "/system/bin/route");
+symlink("toolbox", "/system/bin/ioctl");
+symlink("toolbox", "/system/bin/top");
+symlink("toolbox", "/system/bin/id");
+symlink("toolbox", "/system/bin/sleep");
+symlink("toolbox", "/system/bin/date");
+symlink("toolbox", "/system/bin/dd");
+symlink("mksh", "/system/bin/sh");
+symlink("toolbox", "/system/bin/insmod");
+symlink("toolbox", "/system/bin/notify");
+symlink("toolbox", "/system/bin/kill");
+symlink("toolbox", "/system/bin/hd");
+
+##################################################################
+
+set_perm_recursive(0, 0, 0755, 0644, "/system");
+set_perm_recursive(0, 0, 0777, 0777, "/system/etc/init.d");
+set_perm_recursive(0, 2000, 0755, 0755, "/system/bin");
+set_perm(0, 3003, 06755, "/system/bin/ip");
+set_perm(0, 3003, 02750, "/system/bin/netcfg");
+set_perm(0, 3004, 02755, "/system/bin/ping");
+set_perm(0, 2000, 06750, "/system/bin/run-as");
+set_perm_recursive(1002, 1002, 0755, 0440, "/system/etc/bluetooth");
+set_perm(0, 0, 0755, "/system/etc/bluetooth");
+set_perm(1000, 1000, 0640, "/system/etc/bluetooth/auto_pairing.conf");
+set_perm(3002, 3002, 0444, "/system/etc/bluetooth/blacklist.conf");
+set_perm(1002, 1002, 0440, "/system/etc/dbus.conf");
+set_perm(1014, 2000, 0550, "/system/etc/dhcpcd/dhcpcd-run-hooks");
+set_perm(0, 2000, 0550, "/system/etc/init.goldfish.sh");
+set_perm_recursive(0, 0, 0755, 0555, "/system/etc/ppp");
+set_perm_recursive(0, 2000, 0755, 0644, "/system/vendor");
+set_perm(0, 2000, 0755, "/system/vendor/lib");
+set_perm(0, 2000, 0755, "/system/vendor/lib/egl");
+set_perm(0, 2000, 0755, "/system/vendor/lib/hw");
+set_perm_recursive(0, 2000, 0755, 0755, "/system/xbin");
+set_perm(0, 1000, 0755, "/system/xbin/busybox");
+set_perm(0, 0, 0777, "/system/xbin/sqlite3");
+symlink("/system/xbin/busybox", "/system/bin/busybox");
+run_program("/system/xbin/busybox", "--install", "-s", "/system/xbin");
+set_perm(0, 0, 06755, "/system/xbin/su");
+symlink("/system/xbin/su", "/system/bin/su");
+show_progress(0.1, 10);
+####################################################
+# CUSTOM KERNEL
+###################################################
+set_progress(0.80);
+ui_print(" ");
+ui_print("@Extracting & Installing Kernel");
+
+# STOCK KERNEL AMF7
+if
+    file_getprop("/tmp/aroma-data/kernel.prop","selected.1") == "1"
+then
+  ui_print("  Installing Stock Kernel AMF7");
+  package_extract_dir("customize/stockmodules", "/system/lib/modules");
+  package_extract_file("AMF7boot.img", "/dev/block/mmcblk0p5");
+endif;
+
+# EXPERIMENTAL KERNEL V12
+if
+    file_getprop("/tmp/aroma-data/kernel.prop","selected.1") == "2"
+then
+  ui_print("  Installing Experimental Kernel V12");
+  package_extract_dir("customize/expmodules", "/system/lib/modules");
+  package_extract_file("EXP12boot.img", "/dev/block/mmcblk0p5");
+endif;
+
+show_progress(0.2, 10);
+########################################################################################
+# UNMOUNT PARTITIONS
+###
+set_progress(0.92);
+ui_print(" ");
+ui_print("@Unmount Partitions");
+
+	# unmount /system
+	set_progress(0.95);
+	ui_print("  Unmount /system");
+	run_program("/sbin/busybox", "umount", "/system");
+	unmount("/system");
+
+	# unmount /cache
+	set_progress(0.98);
+	ui_print("  Unmount /cache");
+	run_program("/sbin/busybox", "umount", "/cache");
+	ui_print(" ");
+ui_print("@Finished Installation. Reboot to enjoy");
+set_progress(1.0);

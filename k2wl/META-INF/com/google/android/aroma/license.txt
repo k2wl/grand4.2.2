@@ -1,0 +1,11 @@
+PLEASE READ ALL THE INSTRUCTION BELOW BEFORE INSTALLATION.
+
+1.your warranty is now void.
+
+2.install at your own risk.
+although i throughly tested it before release, i am not responsible for any bricks or data loss or broken devices.
+
+3.always make nandroid back up .
+
+4.select the Kernels in aroma according to your choice. 
+"SELECT ONLY ONE KERNEL AT A TIME"
