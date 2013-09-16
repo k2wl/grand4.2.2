@@ -5,7 +5,7 @@ export PARENT_DIR=`readlink -f ..`
 export USE_SEC_FIPS_MODE=true
 export CROSS_COMPILE=/home/kar/toolchain2/bin/arm-eabi-
 export KBUILD_BUILD_VERSION="1"
-export BUILD_VERSION="K2wl-SGGRAND-v1.0.0"
+export BUILD_VERSION="K2wl-SGGRAND-v1.0.2"
 
 if [ "${1}" != "" ];then
   export KERNELDIR=`readlink -f ${1}`
@@ -44,6 +44,7 @@ rm -rf $RAMFS_TMP/.hg
 mkdir -p $RAMFS/lib/modules
 mkdir -p $RAMFS_TMP/lib/modules
 find -name '*.ko' -exec cp -av {} $RAMFS_TMP/lib/modules/ \;
+find -name '*.ko' -exec cp -av {} /$KERNELDIR/k2wl/customize/expmodules/ \;
 ${CROSS_COMPILE}strip --strip-debug $RAMFS_TMP/lib/modules/*.ko
 chmod 755 $INITRAMFS_TMP/lib/modules/*
 ${CROSS_COMPILE}strip --strip-unneeded $RAMFS_TMP/lib/modules/*
